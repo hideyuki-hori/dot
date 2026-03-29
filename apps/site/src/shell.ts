@@ -30,7 +30,7 @@ async function initWebGPU(canvas: HTMLCanvasElement) {
   const format = navigator.gpu.getPreferredCanvasFormat()
   context.configure({ device, format })
 
-  return { device, context }
+  return { device, context, format }
 }
 
 function setupPointerControls(canvas: HTMLCanvasElement, bridge: ReturnType<typeof createControls>) {
@@ -94,6 +94,15 @@ async function mountWork(id: string, loadWork: WorkLoader) {
   const surface = createSurface(canvas, gpu.context)
   const bridge = createControls()
 
+  const studyCanvases = document.querySelectorAll<HTMLCanvasElement>('canvas[data-study]')
+  const studies: import('@dot/schema').Surface[] = []
+  for (const sc of studyCanvases) {
+    const studyContext = sc.getContext('webgpu')
+    if (!studyContext) continue
+    studyContext.configure({ device: gpu.device, format: gpu.format })
+    studies.push(createSurface(sc, studyContext))
+  }
+
   setupPointerControls(canvas, bridge)
 
   const resize = () => {
@@ -106,7 +115,7 @@ async function mountWork(id: string, loadWork: WorkLoader) {
 
   work.mount({
     main: surface,
-    studies: [],
+    studies,
     device: gpu.device,
     logger,
     controls: bridge.controls,

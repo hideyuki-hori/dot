@@ -3,6 +3,7 @@ export interface WorkMeta {
   title: string
   description: string
   ogImage: string
+  studies?: string[]
 }
 
 function escapeHtml(s: string): string {
@@ -34,10 +35,15 @@ export function renderPage(meta: WorkMeta, entryScript: string): string {
     #main { display: none; padding: 2rem; }
     body.page canvas { display: none; }
     body.page #main { display: block; }
+    #studies { display: flex; gap: 8px; padding: 8px; flex-wrap: wrap; }
+    #studies canvas { width: 300px; height: 300px; }
   </style>
 </head>
 <body>
   <canvas id="canvas"></canvas>
+  <div id="studies">
+  ${(meta.studies ?? []).map(name => `<canvas data-study="${escapeHtml(name)}"></canvas>`).join('\n  ')}
+  </div>
   <div id="main"></div>
   <script type="module" src="${entryScript}"></script>
 </body>
@@ -46,5 +52,8 @@ export function renderPage(meta: WorkMeta, entryScript: string): string {
 
 export function renderFragment(meta: WorkMeta, entryScript: string): string {
   return `<canvas id="canvas"></canvas>
+<div id="studies">
+${(meta.studies ?? []).map(name => `<canvas data-study="${escapeHtml(name)}"></canvas>`).join('\n')}
+</div>
 <script type="module" src="${entryScript}"></script>`
 }
