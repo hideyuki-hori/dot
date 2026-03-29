@@ -1,6 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "rootDir": "../../",
     "types": ["@webgpu/types"],
     "paths": {
       "@dot/schema": ["../../packages/schema/src/index.ts"],
