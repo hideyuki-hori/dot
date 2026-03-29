@@ -14,9 +14,17 @@ function escapeHtml(s: string): string {
     .replace(/"/g, '&quot;')
 }
 
-export function renderPage(meta: WorkMeta, entryScript: string): string {
+function wrapEntryAsGlobal(entryScript: string): string {
+  return entryScript.replace(
+    /export\s*\{\s*(\w+)\s+as\s+work\s*\}\s*;?\s*$/,
+    'globalThis.__DOT_WORK__ = $1;'
+  )
+}
+
+export function renderPage(meta: WorkMeta, entryScript: string, shellScript: string): string {
   const title = escapeHtml(meta.title)
   const description = escapeHtml(meta.description)
+  const wrappedEntry = wrapEntryAsGlobal(entryScript)
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +53,8 @@ export function renderPage(meta: WorkMeta, entryScript: string): string {
   ${(meta.studies ?? []).map(name => `<canvas data-study="${escapeHtml(name)}"></canvas>`).join('\n  ')}
   </div>
   <div id="main"></div>
-  <script type="module" src="${entryScript}"></script>
+  <script type="module">${wrappedEntry}</script>
+  <script type="module">${shellScript}</script>
 </body>
 </html>`
 }
@@ -55,5 +64,5 @@ export function renderFragment(meta: WorkMeta, entryScript: string): string {
 <div id="studies">
 ${(meta.studies ?? []).map(name => `<canvas data-study="${escapeHtml(name)}"></canvas>`).join('\n')}
 </div>
-<script type="module" src="${entryScript}"></script>`
+<script type="module">${entryScript}</script>`
 }

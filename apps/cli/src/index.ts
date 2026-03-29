@@ -287,6 +287,7 @@ const workDeploy = Command.make('deploy', { n: workNum }, ({ n }) =>
     const kv = yield* KvService
 
     const entryScript = yield* vite.build(id)
+    const shellScript = yield* vite.buildShell()
 
     const meta = {
       id,
@@ -295,7 +296,7 @@ const workDeploy = Command.make('deploy', { n: workNum }, ({ n }) =>
       ogImage: `/og/${id}.png`,
     }
 
-    const page = yield* html.generatePage(meta, entryScript)
+    const page = yield* html.generatePage(meta, entryScript, shellScript)
     const fragment = yield* html.generateFragment(meta, entryScript)
 
     yield* kv.put(`page:/${id}`, page)
@@ -316,6 +317,7 @@ const workPublish = Command.make('publish', { n: workNum }, ({ n }) =>
     const pw = yield* PlaywrightService
 
     const entryScript = yield* vite.build(id)
+    const shellScript = yield* vite.buildShell()
 
     const ogBuffer = yield* pw.captureOgImage(id)
     yield* Console.log(`OG image captured (${ogBuffer.length} bytes)`)
@@ -327,7 +329,7 @@ const workPublish = Command.make('publish', { n: workNum }, ({ n }) =>
       ogImage: `/og/${id}.png`,
     }
 
-    const page = yield* html.generatePage(meta, entryScript)
+    const page = yield* html.generatePage(meta, entryScript, shellScript)
     const fragment = yield* html.generateFragment(meta, entryScript)
 
     yield* kv.put(`page:/${id}`, page)
@@ -346,6 +348,8 @@ const workPublishAll = Command.make('publish-all', {}, () =>
     const kv = yield* KvService
     const workerDeploy = yield* WorkerDeployService
 
+    const shellScript = yield* vite.buildShell()
+
     const entries = fs.readdirSync('works').filter(e => /^\d{3}$/.test(e)).sort()
     for (const id of entries) {
       yield* Console.log(`Building works/${id}...`)
@@ -358,7 +362,7 @@ const workPublishAll = Command.make('publish-all', {}, () =>
         ogImage: `/og/${id}.png`,
       }
 
-      const page = yield* html.generatePage(meta, entryScript)
+      const page = yield* html.generatePage(meta, entryScript, shellScript)
       const fragment = yield* html.generateFragment(meta, entryScript)
 
       yield* kv.put(`page:/${id}`, page)
