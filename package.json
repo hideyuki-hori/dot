@@ -12,8 +12,12 @@
   "packageManager": "pnpm@10.26.2",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260329.1",
+    "@effect/cli": "^0.75.0",
+    "@effect/platform": "^0.96.0",
+    "@effect/platform-node": "^0.106.0",
     "@webgpu/types": "latest",
     "effect": "latest",
+    "playwright": "^1.58.2",
     "typescript": "latest",
     "vite": "latest"
   }

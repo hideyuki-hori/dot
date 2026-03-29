@@ -1,5 +1,17 @@
 {
   "name": "@dot/cli",
   "version": "1.0.0",
-  "private": true
+  "private": true,
+  "type": "module",
+  "bin": {
+    "dot": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsx": "latest"
+  }
 }
