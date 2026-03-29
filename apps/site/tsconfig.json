@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": ["@webgpu/types"],
+    "paths": {
+      "@dot/schema": ["../../packages/schema/src/index.ts"],
+      "@dot/schema/*": ["../../packages/schema/src/*"]
+    }
+  },
+  "include": ["src"]
+}

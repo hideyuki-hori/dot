@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@dot/schema": ["../../packages/schema/src/index.ts"],
+      "@dot/schema/*": ["../../packages/schema/src/*"]
+    }
+  },
+  "include": ["src"]
+}
