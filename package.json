@@ -11,6 +11,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.26.2",
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260329.1",
     "@webgpu/types": "latest",
     "effect": "latest",
     "typescript": "latest",
