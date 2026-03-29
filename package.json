@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@dot/cli": "workspace:*"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +20,7 @@
     "@webgpu/types": "latest",
     "effect": "latest",
     "playwright": "^1.58.2",
+    "tsx": "^4.21.0",
     "typescript": "latest",
     "vite": "latest"
   }

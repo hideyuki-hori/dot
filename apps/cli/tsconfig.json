@@ -5,6 +5,8 @@
     "lib": ["ES2022"],
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "rootDir": "../..",
     "paths": {
       "@dot/schema": ["../../packages/schema/src/index.ts"],

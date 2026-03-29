@@ -9,5 +9,5 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["@webgpu/types"]
   },
-  "include": ["types.d.ts", "001/**/*.ts", "002/**/*.ts"]
+  "include": ["types.d.ts", "*/**/*.ts"]
 }

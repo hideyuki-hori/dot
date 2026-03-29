@@ -4,11 +4,14 @@
   "private": true,
   "type": "module",
   "bin": {
-    "dot": "./dist/index.js"
+    "dot": "./bin/dot.mjs"
   },
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc"
+  },
+  "dependencies": {
+    "@dot/schema": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
